@@ -5,7 +5,7 @@ Description: Given four numbers, it looks for a way to make
 them add, subtract, multiply, and/or divide in any order to make 24
 """
 import copy as cp
-import random
+
 
 
 # Input is a 4 element list of 4 integers between 1 and 13
