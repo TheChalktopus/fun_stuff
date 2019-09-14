@@ -5,7 +5,7 @@ Description: Given four numbers, it looks for a way to make
 them add, subtract, multiply, and/or divide in any order to make 24
 """
 import copy as cp
-
+import random
 
 
 # Input is a 4 element list of 4 integers between 1 and 13
@@ -64,18 +64,25 @@ def parentheses_combos(eqString) :
 # returns string of numbers and operations
 def operations_combos(num_list) :
     results = []
+    shuffled_operations = []
     operations = ["+", "-", "*", "/"]
+    rolls = 3
     # Get list of all combinations/permutations of three operations
-    shuffled_operations = shuffle_four(operations)
-    # adding them into the string
-    for operate in shuffled_operations :
-        append_val1 = str(num_list[0]) + operate[0] + str(num_list[1]) + operate[1]
-        append_val2 = str(num_list[2]) + operate[2] + str(num_list[3])
-        results.append(append_val1 + append_val2)
+    for i in range(len(operations)) :
+        counter1 = 0
+        operators = [operations[i] for q in range(len(operations))]
+        for j in range(len(operations)) :
+            operators[1] = operations[counter1]
+            counter1 += 1
+            counter2 = 0
+            for k in range(len(operations)) :
+                operators[2] = operations[counter2]
+                counter2 += 1
+                append_val1 = str(num_list[0]) + operators[0] + str(num_list[1]) + operators[1]
+                append_val2 = str(num_list[2]) + operators[2] + str(num_list[3])
+                results.append(append_val1 + append_val2)
     return results
 
-
-   
 
    
    
@@ -140,22 +147,25 @@ def solution24(n1, n2, n3, n4, limit="NONE", answer=24) :
         return solutions
     else :
         return "NO SOLUTIONS FOUND"
-       
+    
+    
+# no input
+# Returns none
+# runs solution24, lets user input function
+def game(the_answer=24, num_of_solutions=10) :
+    solved = solution24(int(input("Number 1: ")),int(input("Number 2: ")), \
+        int(input("Number 3: ")), int(input("Number 4: ")), limit=num_of_solutions, answer=the_answer)
+    # In case function returns "NO SOLUTIONS FOUND"
+    try :
+        for i in range(len(solved)) :
+            # Prints answer and evaluation of string
+            # to show that it is indeed equal to 24
+            print(solved[i] + "=" + str(eval(solved[i])))
+        print("I think " + str(i) + " solutions are enough.")
+    except :
+        print(solved)
 
-
-solved = solution24(int(input("Number 1: ")),int(input("Number 2: ")), \
-    int(input("Number 3: ")), int(input("Number 4: ")), limit=10)
-# In case function returns "NO SOLUTIONS FOUND"
-try :
-    for i in range(len(solved)) :
-        # Prints answer and evaluation of string
-        # to show that it is indeed equal to 24
-        print(solved[i] + "=" + str(eval(solved[i])))
-    print("I think " + str(i) + " solutions are enough.")
-except :
-    print(solved)
-
-
+game()
 
 
 
